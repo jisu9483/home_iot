@@ -52,7 +52,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'home_iot.wsgi.application'
 
 AUTH_USER_MODEL = 'account.MyUser'
-#LOGIN_REDIRECT_URL = '/home/'
+LOGIN_REDIRECT_URL = 'house_condition/house_codition_show'
 LOGOUT_REDIRECT_URL = '/login/'
 
 DATABASES = {

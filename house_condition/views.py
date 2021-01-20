@@ -26,6 +26,12 @@ class House_Codition_Show(View):
     templates_name = "house_condition/house_condition_show.html"
 
     def get(self, request):
-        record = ConditionRecord.objects.all()[0:12]
-        context = {}
+        record = ConditionRecord.objects.all()\
+                    .values('temperature','humidity','record_time')\
+                    .order_by('-id')[0:12]
+
+        context = {
+            'record':reversed(record),
+            'data':json.dumps(list(record), cls=serializers.json.DjangoJSONEncoder),
+        }
         return render(request, self.templates_name, context)

@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 def login(request):
     if request.user.is_authenticated:
-        return redirect('main_page')
+        return redirect('house_codition_show')
         
     if request.method == "POST":
         snackfor_id = request.POST['id']
@@ -26,14 +26,10 @@ def login(request):
         user = auth.authenticate(request, username = snackfor_id, password=pw)
         if user is not None :
             if user.is_active is None :
-                return render(request, 'account/login.html', { 'error' : '로그인 할 수 없습니다. Snackfor 개발팀에게 문의주세요.' })
+                return render(request, 'account/login.html', { 'error' : '로그인 할 수 없습니다. 함부로 못들어오지!!' })
             else:    
                 auth.login(request, user)
-                # 배송팀 바로 일정 보이기
-                if request.user.user_profile.team == "배송":
-                    return redirect('delivery_schedule_area')
-                else:
-                    return redirect('main_page')
+                return redirect('house_codition_show')
         else:
             return render(request, 'account/login.html', { 'error' : 'ID와 PW를 다시 확인하여주세요.' })
     else:
