@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title%}my home{% endblock title %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+</head>
+<script>
+// 아이디 저장시 체크 후 들고오기 
+window.onload = function() {
+ 
+ if (getCookie("user_name")) { 
+     document.login.id.value = getCookie("user_name"); 
+     document.login.id_save.checked = true; 
+     $('#pw').focus();
+ }
+
+}
+// 엔터칠시 로그인
+function enterkey() {
+  if (window.event.keyCode == 13) {
+    useragent_chk();
+  }
+}
+// 아이디 저장
+function setCookie(name, value, expiredays) 
+{
+ var todayDate = new Date();
+ todayDate.setDate(todayDate.getDate() + expiredays);
+ document.cookie = name + "=" + escape(value) + "; path=/; expires="
+         + todayDate.toGMTString() + ";"
+}
+// 쿠키 가져오기
+function getCookie(Name) { 
+ var search = Name + "=";
+ if (document.cookie.length > 0) { 
+     offset = document.cookie.indexOf(search);
+     if (offset != -1) { 
+         offset += search.length; 
+         end = document.cookie.indexOf(";", offset); 
+         if (end == -1)
+             end = document.cookie.length;
+         return unescape(document.cookie.substring(offset, end));
+     }
+ }
+}
+// 인터넷 브라우저 체크
+function useragent_chk(){
+  var browse = navigator.userAgent.toLowerCase(); 
+  if (document.login.id_save.checked == true) { 
+      setCookie("user_name", document.login.id.value, 7); 
+  } else { 
+      setCookie("user_name", document.login.id.value, 0); 
+  }
+
+  if(browse.indexOf('chrome')==-1){
+    if(confirm("크롬이 아닐 경우 조회만 가능합니다. 로그인하시겠습니까?")){
+      login.submit();
+    }
+  }
+  else{
+      login.submit();
+   }
+}
+</script>
+<body  style="margin-top:250px;"  class="bg-gradient-warning">
+
+  <div  class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div style="background-image: url('{% static '/snackfor/img/snackfor.jpg' %}');background-position: 50% 140px;background-repeat: no-repeat;height:195px;width:50%;"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                  </div>
+                  <form method="POST" class="user" name="login" id="login">{% csrf_token %}
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="id" name="id" autofocus placeholder="ID">
+                    </div>  
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="pw" name="pw" onkeyup="enterkey();" placeholder="PASSWORD">
+                    </div>
+                    <!--<div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      </div>
+                    </div>-->
+                    <!--<a href="#" onclick="document.forms['login'].submit();" class="btn btn-primary btn-user btn-block">
+                      로그인
+                    </a>-->
+                    <input type="checkbox" name="id_save" id="id_save" value="save_ok">&nbsp;아이디 저장
+                    <a href="javascript:useragent_chk()" class="btn btn-primary btn-user btn-block">
+                      로그인
+                    </a>
+                    <br>
+                    {{error}}
+                    <hr>
+                </div>
+              </div>
+            </div>   
+          </div>
+        </div>
+     
+      </div>
+      
+    </div>
+
+  </div>
+
+</body>
+
+</html>
