@@ -26,7 +26,23 @@
 
 <link href='{% static "home_iot/build/css/custom.min.css" %}' rel="stylesheet">
 </head>
-<body class="nav-md">
+<script type="text/javascript">
+
+    function endJob(fn){
+      fn.status = "end";
+    }
+    
+    function switchScreen() {
+        document.getElementById("divLoading").style.display = "none";
+        document.getElementById("wrapper").style.display = "";
+    }
+</script>
+      
+    
+<div id="divLoading" style="position:absolute; top:35%; left:0; width:100%; text-align:center; margin:0 auto;">
+    <img src="" alt="잠시만 기다려 주세요. 로딩중입니다." />
+</div>
+<body class="nav-md" onload="switchScreen();">
 <div class="container body">
 <div class="main_container">
 <!-- 왼쪽 사이드바 -->

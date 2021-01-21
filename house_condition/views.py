@@ -1,6 +1,9 @@
 import json
 import csv
 import io
+import requests
+import os
+import re
 
 from collections import defaultdict
 from datetime import datetime, timedelta, date
@@ -26,13 +29,26 @@ class House_Codition_Show(View):
     templates_name = "house_condition/house_condition_show.html"
     
     def get(self, request):
+        # 날씨 API 통신 웹사이트 openweathermap
+        with open('secrets.json') as js :
+            data = json.load(js)
+
+        WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?q=seoul&appid='+data['WEATHER_API_KEY']  
+        response = requests.get(WEATHER_URL).json()
+        
+        current_temperature = response['main']['temp'] - 273.15
+        current_humidity = response['main']['humidity']
+        weather_status = response['weather'][0]['main']
+
         record = ConditionRecord.objects.all()\
                     .values('temperature','humidity','record_time')\
                     .order_by('-id')[0:12]
-
         context = {
             'record':reversed(record),
             'data':json.dumps(list(record), cls=serializers.json.DjangoJSONEncoder),
+            'current_temperature':round(current_temperature,1),
+            'current_humidity':current_humidity,
+            'weather_status':weather_status,
         }
         return render(request, self.templates_name, context)
 

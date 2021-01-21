@@ -2,31 +2,39 @@
 {% load static %}
 
 {% block content %}
-
-
-<script type="text/javascript">
-
-function endJob(fn){
-  fn.status = "end";
-}
-
-  function switchScreen() {
-      document.getElementById("divLoading").style.display = "none";
-      document.getElementById("wrapper").style.display = "";
-  }
-  </script>
   <script  src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-<body id="page-top"  onload="switchScreen();">
-
-  <div id="divLoading" style="position:absolute; top:35%; left:0; width:100%; text-align:center; margin:0 auto;">
-      <img src="" alt="잠시만 기다려 주세요. 로딩중입니다." />
-  </div>
   <div class="clearfix">
     <h3>온습도 현황</h3>
   </div>
   <div id="wrapper"  style="display:none;">
     <div class="row">
-      <div class="col-md-6 col-sm-6  ">
+      <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+          <h2>서울 현재 날씨</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          </ul>
+          <div class="clearfix"></div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            {% if weather_status == "Rain" %}
+              <canvas height="150" width="150" id="sleet"></canvas>{{weather_status}}
+            {% else %}
+            {% endif  %}
+          </div>
+          <div class="col-md-3 col-sm-3">
+            <h5 class="degrees">현재온도 : {{current_temperature}}</h5>
+          </div>
+          <div class="col-md-3 col-sm-3">
+            <h5>현재습도 : {{current_humidity}} %</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
         <div class="x_panel">
           <div class="x_title">
           <h2>온도</h2>
