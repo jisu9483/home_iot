@@ -24,7 +24,7 @@ from .models import ConditionRecord
 # 집 컨디션 조회
 class House_Codition_Show(View):
     templates_name = "house_condition/house_condition_show.html"
-
+    
     def get(self, request):
         record = ConditionRecord.objects.all()\
                     .values('temperature','humidity','record_time')\

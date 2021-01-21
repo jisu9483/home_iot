@@ -36,7 +36,7 @@ ROOT_URLCONF = 'home_iot.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,6 +97,6 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-#세션 타임 아웃 설정 6시간 
-SESSION_COOKIE_AGE = 36000
+#세션 타임 아웃 설정 12시간 
+SESSION_COOKIE_AGE = 72000
 SESSION_SAVE_EVERY_REQUEST = True

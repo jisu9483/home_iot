@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="images/favicon.ico" type="image/ico" />
+<title>Home Condition</title>
+<link href='{% static "home_iot/vendors/bootstrap/dist/css/bootstrap.min.css" %}' rel="stylesheet">
+
+<link href='{% static "home_iot/vendors/font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
+
+<link href='{% static "home_iot/vendors/nprogress/nprogress.css" %}' rel="stylesheet">
+
+<link href='{% static "home_iot/vendors/iCheck/skins/flat/green.css" %}' rel="stylesheet">
+
+<link href='{% static "home_iot/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" %}' rel="stylesheet">
+
+<link href='{% static "home_iot/vendors/jqvmap/dist/jqvmap.min.css" %}' rel="stylesheet" />
+
+<link href='{% static "home_iot/vendors/bootstrap-daterangepicker/daterangepicker.css" %}' rel="stylesheet">
+
+<link href='{% static "home_iot/build/css/custom.min.css" %}' rel="stylesheet">
+</head>
+<body class="nav-md">
+<div class="container body">
+<div class="main_container">
+<!-- 왼쪽 사이드바 -->
+{% block sidebar %}
+    {% include "sidebar.html" %}
+{% endblock sidebar %}
+
+<div class="top_nav">
+<!-- 탑 바 -->
+{% block topbar %}
+    {% include "topbar.html" %}
+{% endblock topbar %}
+</div>
+
+
+<div class="right_col" role="main">
+    <!-- 본문 -->
+    {% block content %}                    
+    {% endblock content %}
+</div>
+
+
+<footer>
+<div class="pull-right">
+    <span>Copyright &copy; Jisu's home 2021 ~ </span>
+</div>
+</footer>
+
+</div>
+</div>
+
+<script src='{% static "home_iot/vendors/jquery/dist/jquery.min.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/bootstrap/dist/js/bootstrap.bundle.min.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/fastclick/lib/fastclick.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/nprogress/nprogress.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/Chart.js/dist/Chart.min.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/gauge.js/dist/gauge.min.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/iCheck/icheck.min.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/skycons/skycons.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/Flot/jquery.flot.js" %}'></script>
+<script src='{% static "home_iot/vendors/Flot/jquery.flot.pie.js" %}'></script>
+<script src='{% static "home_iot/vendors/Flot/jquery.flot.time.js" %}'></script>
+<script src='{% static "home_iot/vendors/Flot/jquery.flot.stack.js" %}'></script>
+<script src='{% static "home_iot/vendors/Flot/jquery.flot.resize.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/flot.orderbars/js/jquery.flot.orderBars.js" %}'></script>
+<script src='{% static "home_iot/vendors/flot-spline/js/jquery.flot.spline.min.js" %}'></script>
+<script src='{% static "home_iot/vendors/flot.curvedlines/curvedLines.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/DateJS/build/date.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/jqvmap/dist/jquery.vmap.js" %}'></script>
+<script src='{% static "home_iot/vendors/jqvmap/dist/maps/jquery.vmap.world.js" %}'></script>
+<script src='{% static "home_iot/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js" %}'></script>
+
+<script src='{% static "home_iot/vendors/moment/min/moment.min.js" %}'></script>
+<script src='{% static "home_iot/vendors/bootstrap-daterangepicker/daterangepicker.js" %}'></script>
+
+<script src='{% static "home_iot/build/js/custom.min.js" %}'></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"si":10,"rayId":"614d63ed4c2200d3","version":"2021.1.1"}'></script>
+</body>
+</html>
