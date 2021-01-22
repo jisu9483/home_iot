@@ -21,7 +21,20 @@
           <div class="col-md-6 col-sm-6">
             {% if weather_status == "Rain" %}
               <canvas height="150" width="150" id="sleet"></canvas>{{weather_status}}
-            {% else %}
+            {% elif weather_status == "Thunderstorm" %}
+              <canvas height="150" width="150" id="wind"></canvas>{{weather_status}}
+            {% elif weather_status == "Drizzle" %}
+              <canvas height="150" width="150" id="rain"></canvas>{{weather_status}}
+            {% elif weather_status == "Snow" %}
+              <canvas height="150" width="150" id="snow"></canvas>{{weather_status}}
+            {% elif weather_status == "Atmosphere" %}
+              <canvas height="150" width="150" id="cloudy"></canvas>{{weather_status}}
+            {% elif weather_status == "Clear" %}
+              <canvas height="150" width="150" id="clear-day"></canvas>{{weather_status}}
+            {% elif weather_status == "Clouds" %}
+              <canvas height="150" width="150" id="cloudy"></canvas>{{weather_status}}
+            {% elif weather_status == "Mist" %}
+              <canvas height="150" width="150" id="cloudy"></canvas>{{weather_status}}
             {% endif  %}
           </div>
           <div class="col-md-3 col-sm-3">
