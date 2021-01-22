@@ -4,6 +4,7 @@ import io
 import requests
 import os
 import re
+import serial
 
 from collections import defaultdict
 from datetime import datetime, timedelta, date
@@ -19,7 +20,8 @@ from django.utils.safestring import mark_safe
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from django.core.paginator import Paginator
-from django.db.models import Q, Count, Sum, Case, When, Subquery, OuterRef,IntegerField
+from django.db.models import Q, Count, Sum, Case, When, Subquery, OuterRef,IntegerField, F, Func, Value, CharField
+from django.db.models.functions import Cast,ExtractHour, ExtractMinute
 from django.db import models
 
 from .models import ConditionRecord
@@ -41,18 +43,22 @@ class House_Codition_Show(View):
         weather_status = response['weather'][0]['main']
 
         record = ConditionRecord.objects.all()\
-                    .values('temperature','humidity','record_time')\
-                    .order_by('-id')[0:12]
+                    .values('record_time','temperature','humidity')\
+                    .annotate(
+                            hour=ExtractHour('record_time'),
+                            minute=ExtractMinute('record_time'),
+                            )\
+                    .order_by('-id')[0:6]
         context = {
             'record':reversed(record),
-            'data':json.dumps(list(record), cls=serializers.json.DjangoJSONEncoder),
+            'data':json.dumps(list(reversed(record)), cls=serializers.json.DjangoJSONEncoder),
             'current_temperature':round(current_temperature,1),
             'current_humidity':current_humidity,
             'weather_status':weather_status,
         }
         return render(request, self.templates_name, context)
 
-# 온습도 값 받아오기
+# 온습도 값 받아오기 10분에 한번
 class Request_Data_Save(View):    
     def get(self, request):
         temperature = self.request.GET.get('temperature','0.0')
@@ -69,3 +75,18 @@ class Request_Data_Save(View):
                     humidity = float(humidity), 
                 )
         return HttpResponse(status=200)
+
+# 수동 에어컨 On/Off
+class Air_Condition_Manual(View):    
+    def get(self,request):
+        status_code = self.request.GET.get('status','')
+        arduino = serial.Serial('COM3', 9600, timeout=5)
+        # 에어컨 on/off test
+        if status_code == "On":
+            d = 'Y';
+            arduino.write(d.encode('utf-8'))
+        else:
+            d = 'N';
+            arduino.write(d.encode('utf-8'))
+        data = {}
+        return JsonResponse(data)

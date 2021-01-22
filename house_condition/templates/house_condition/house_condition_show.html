@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% load static %}
-
+<meta http-equiv="refresh" content="600">
 {% block content %}
   <script  src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <div class="clearfix">
@@ -37,11 +37,16 @@
               <canvas height="150" width="150" id="cloudy"></canvas>{{weather_status}}
             {% endif  %}
           </div>
-          <div class="col-md-3 col-sm-3">
+          <div class="col-md-2 col-sm-2">
             <h5 class="degrees">현재온도 : {{current_temperature}}</h5>
           </div>
-          <div class="col-md-3 col-sm-3">
+          <div class="col-md-2 col-sm-2">
             <h5>현재습도 : {{current_humidity}} %</h5>
+          </div>
+           <div class="col-md-2 col-sm-2">
+            <h5>에어컨 수동 버튼 </h5><br>
+            <a href="javascript:Air_Condition_Manual('On')"><i class="fa fa-toggle-on">On</i></a> / 
+            <a href="javascript:Air_Condition_Manual('Off')"><i class="fa fa-toggle-off">Off</i></a>
           </div>
         </div>
       </div>
@@ -82,7 +87,26 @@
   </div>
 
 <script type="text/javascript">
-
+//수동 에어컨 on/off
+function Air_Condition_Manual(status){
+if(confirm("에어컨을 수동제어하시겠습니까?")){
+    $.ajax({
+          url: '{% url "air_condition_manual" %}',
+          dataType: 'json',
+          type:'GET',
+          data: {
+              'status':status,
+          },
+      success: function(data){   
+       
+      }
+      }) ;
+    }
+}
+// 10분당 페이지 리프레쉬
+window.setTimeout(function () {
+  window.location.reload();
+}, 600000);
 // 그래프 data 가공
 date = [];
 temperature = [];
@@ -91,7 +115,8 @@ humidity = [];
 var dataset = {{ data|safe }};
 
 for(var i = 0; i < dataset.length; i++){
-  date.push(dataset[i]['record_time']);
+  make_date = dataset[i]['hour']+"시 "+dataset[i]['minute']+"분"
+  date.push(make_date);
   temperature.push(dataset[i]['temperature']);
   humidity.push(dataset[i]['humidity']);
 }
@@ -108,8 +133,7 @@ function temperature_graph(){
           datasets: [{
               label: '온도',
               data: temperature,
-              backgroundColor: "#4e73df",
-              hoverBackgroundColor: "#2e59d9",
+              hoverBackgroundColor: "#4e73df",
               borderColor: "#4e73df",
           }]
       },
@@ -171,7 +195,6 @@ function humidity_graph(){
           datasets: [{
               label: '습도',
               data: humidity,
-              backgroundColor: "#FF9900",
               hoverBackgroundColor: "#2e59d9",
               borderColor: "#FF9900",
           }]
