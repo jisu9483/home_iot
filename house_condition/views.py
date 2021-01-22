@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, date
 from django.utils import timezone
 from django.utils.dateformat import DateFormat
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -57,17 +57,15 @@ class Request_Data_Save(View):
     def get(self, request):
         temperature = self.request.GET.get('temperature','0.0')
         humidity = self.request.GET.get('humidity','0.0')
-
-        # 집온도가 34도 일시 에어컨 On Chek
-        if float(temperature) > 34:
-            on_air_conditioner = True
-        else:
-            on_air_conditioner = False
+        # # 집온도가 34도 일시 알람
+        # if float(temperature) > 34:
+        #     on_air_conditioner = True
+        # else:
+        #     on_air_conditioner = False
 
         # 받아온 값 저장
         record_save = ConditionRecord.objects.create(
                     temperature = float(temperature),
                     humidity = float(humidity), 
-                    on_air_conditioner = on_air_conditioner
                 )
-        pass
+        return HttpResponse(status=200)
